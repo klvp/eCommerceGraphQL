@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "mongo:dump": "node ./src/db/setupCollection.js"
   },
   "engines": {
     "node": "20.17.0"

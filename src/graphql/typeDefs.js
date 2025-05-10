@@ -7,10 +7,6 @@ export const typeDefs = `#graphql
         getSalesAnalytics(startDate: String!, endDate: String!): SalesAnalytics
     }
 
-    type Mutation {
-        createUser(name: String!, age: Int!, isMarried: Boolean!): User
-    }
-
     type User {
         id: ID
         name: String
@@ -49,6 +45,33 @@ export const typeDefs = `#graphql
     type CategoryBreakdown {
         category: String
         revenue: Float
+    }
+
+    type Mutation {
+        createUser(name: String!, age: Int!, isMarried: Boolean!): User
+        placeOrder(customerId: ID!, products: [OrderedProducts!]!): ID
+        updateOrderStatus(orderId: ID!, status: String!): Int
+    }
+
+    input OrderedProducts {
+        productId: ID
+        quantity: Int
+        priceAtPurchase: Float
+    }
+
+    input Order {
+        customerId: ID
+        products: [
+            OrderedProducts
+        ]
+    }
+
+    type UpdatedCount {
+        acknowledged: Boolean
+        modifiedCount: Int
+        upsertedId: ID
+        upsertedCount: Int
+        matchedCount: Int
     }
 `
 

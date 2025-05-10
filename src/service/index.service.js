@@ -31,7 +31,7 @@ class MongoBaseService {
         return this.collection.insertMany(payloadArray)
     }
 
-    async update(filter, setterObject) {
+    async updateOne(filter, setterObject) {
         return this.collection.updateOne(filter, setterObject)
     }
 

@@ -1,8 +1,9 @@
 import { MongoClient } from 'mongodb';
 import { env } from '../../env.js';
+import config  from 'config';
 
 const client = new MongoClient(env.MONGO_URL);
-const dbName = "eCommerce";
+const dbName = config.get("DB_NAME");
 
 async function connectToServer(dbName) {
     const mongoClient = await client.connect();

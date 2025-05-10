@@ -3,7 +3,7 @@ import { cleanEnv, str, port } from 'envalid'
 
 const env = cleanEnv(process.env, {
     NODE_ENV: str({
-        choices: ['production', 'staging', 'dev'],
+        choices: ['production', 'staging', 'dev', 'test'],
     }),
     PORT: port({ default: 3000 }),
     MONGO_URL: str({ default: 'mongodb://localhost:27017/' }),

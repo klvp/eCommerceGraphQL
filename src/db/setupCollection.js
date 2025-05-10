@@ -4,9 +4,18 @@ import csv from 'csv-parser';
 import { UUID } from "mongodb";
 import path from 'path';
 
-function processFile(filePath, collectionName){
-    return new Promise((resolve,reject) => {
+function processFile(filePath, collectionName) {
+    return new Promise((resolve, reject) => {
         const results = [];
+        const collection = db.collection(collectionName);
+        if (collectionName === "orders") {
+            collection.createIndex({ status: 1 })
+                .then(() => console.log('Index created for orders collection'))
+                .catch(error => {
+                    console.error('Error creating index:', error);
+                    return reject(error);
+                });
+        }
         fs.createReadStream(filePath)
             .pipe(csv())
             .on('data', (row) => {
@@ -32,7 +41,7 @@ function processFile(filePath, collectionName){
                         if (!order.customerId || !Array.isArray(order.products)) {
                             throw new Error('Invalid data');
                         }
-                    } else if(collectionName == "products") {
+                    } else if (collectionName == "products") {
                         order = {
                             _id: new UUID(row._id),
                             name: row.name,
@@ -59,7 +68,6 @@ function processFile(filePath, collectionName){
             .on('end', async () => {
                 try {
                     if (results.length) {
-                        const collection = db.collection(collectionName);
                         const insertResult = await collection.insertMany(results);
                         console.log(`Inserted ${insertResult.insertedCount}`);
                     } else {

@@ -1,0 +1,49 @@
+query GetCustomerSpending(
+    $customerId: ID!
+) {
+    getCustomerSpending(customerId: $customerId) {
+        averageOrderValue
+        customerId
+        lastOrderDate
+        totalSpent
+    }
+}
+
+query GetSalesAnalytics(
+    $startDate: String!,
+    $endDate: String!
+) {
+    getSalesAnalytics(startDate: $startDate, endDate: $endDate) {
+        categoryBreakdown {
+        category
+        revenue
+        }
+        completedOrders
+        totalRevenue
+    }
+}
+
+query GetTopSellingProducts(
+    $limit: Int!
+) {
+    getTopSellingProducts(limit: $limit) {
+        name
+        productId
+        totalSold
+    }
+}
+
+
+mutation Mutation(
+    $placeOrderCustomerId2: ID!,
+    $products: [OrderedProducts!]!,
+    $orderId: ID!, $status: String!
+) {
+    placeOrder(customerId: $placeOrderCustomerId2, products: $products)
+}
+
+mutation Mutation(
+    $orderId: ID!, $status: String!
+) {
+    updateOrderStatus(orderId: $orderId, status: $status)
+}
